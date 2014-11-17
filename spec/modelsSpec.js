@@ -1,7 +1,7 @@
 app = {};
 Backbone = require('backbone');
 Models = require('../client/scripts/models.js');
-Collection  = require('../client/scripts/collections.js');
+Collection  = require('../client/scripts/collection.js');
 var expect = require('chai').expect;
 var should = require('should');
 var User = Models.User;

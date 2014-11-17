@@ -2,7 +2,7 @@ var app = {
   init: function(){
 
   },
-  server: 'https://api.parse.com/',
+  server: 'https://api.parse.com/1/classes/chatterbox',
   display: function(message) {
 
   },
@@ -10,16 +10,12 @@ var app = {
   _users: [],
   fetch: function(callback) {
     $.ajax({
-      url: this.server + '1/classes/chatterbox/',
+      url: this.server,
       type: 'GET',
       data: {
         order: 'createdAt'
       },
-      success: function (data) {
-        app._parseData(data);
-        app._room_view = new Views.RoomsView({collection: this._rooms});
-        app._room_view.render();
-      }.bind(this),
+      success: app._parseData.bind(this),
       error: function() {
         alert("Unable to fetch");
       }
@@ -31,11 +27,9 @@ var app = {
     var roomNames = _.uniq(_.map(data.results, function(result){
       return result.roomname;
     }));
-    console.log(roomNames);
     //create all Rooms
     _.each(roomNames, function(roomName){
-      this._rooms[roomName] = new Collection.Room();
-      this._rooms[roomName].name = roomName;
+      this._rooms[roomName] = new Collection.Room({name: roomName});
     }.bind(this));
     //get all users
     var userNames = _.uniq(_.map(data.results, function(result){
@@ -72,7 +66,6 @@ var app = {
 
   },
   addRoom: function (roomName) {
-
 
   }
 };
